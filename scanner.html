@@ -108,7 +108,7 @@
                 if (decoded_data.includes("chunks")) {
                   Object.assign(file_metadata, JSON.parse(decoded_data));
                   decoded_chunks.value = {};
-                  user_message.value = `Transferring file: ${decodeURIComponent(escape(atob(file_metadata.name)))}`;
+                  user_message.value = `Transferring file: ${file_metadata.name}`;
                 } else if (decoded_data.split(",").length == 2) {
                   let raw_data = decode_data(decoded_data);
                   decoded_chunks.value[raw_data["index"]] = raw_data["data"];
@@ -132,7 +132,7 @@
             let output_unit8array = Uint8Array.from(output_array);
             window.output_unit8array = output_unit8array;
             let infalted_array = pako.inflate(window.output_unit8array);
-            download_file(infalted_array, decodeURIComponent(escape(atob(file_metadata.name))));
+            download_file(infalted_array, file_metadata.name);
             stop_receiver();
           };
 
